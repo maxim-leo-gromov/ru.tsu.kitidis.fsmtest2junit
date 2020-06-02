@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="ru.tsu.kitidis.fsmtest2junit.ui.commands"
+         name="Tool Commands"
+         point="org.eclipse.ui.commands">
+      <category
+      		description="Category of main comands"
+            id="ru.tsu.kitidis.fsmtest2junit.ui.commands.maincategory"
+            name="Category of Main Comands">
+      </category>
+      <command
+            categoryId="ru.tsu.kitidis.fsmtest2junit.ui.commands.maincategory"
+            description="Tool Information"
+            id="ru.tsu.kitidis.fsmtest2junit.ui.commands.toolInfoCommand"
+            name="Tool Information">
+      </command>
+      <command
+            categoryId="ru.tsu.kitidis.fsmtest2junit.ui.commands.maincategory"
+            description="Build a JUnit test case"
+            id="ru.tsu.kitidis.fsmtest2junit.ui.commands.buildJUnitTestCaseCommand"
+            name="Build a JUnit test case">
+      </command>
+   </extension>
+   <extension
+         id="ru.tsu.kitidis.fsmtest2junit.ui.handlers"
+         name="Handlers for commands"
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="ru.tsu.kitidis.fsmtest2junit.ui.handlers.ToolInfoHandler"
+            commandId="ru.tsu.kitidis.fsmtest2junit.ui.commands.toolInfoCommand">
+      </handler>
+      <handler
+            class="ru.tsu.kitidis.fsmtest2junit.ui.handlers.BuildJUnitTestCaseHandler"
+            commandId="ru.tsu.kitidis.fsmtest2junit.ui.commands.buildJUnitTestCaseCommand">
+      </handler>
+   </extension>
+   <extension
+         id="ru.tsu.kitidis.fsmtest2junit.ui.menus"
+         name="Tool Menus"
+         point="org.eclipse.ui.menus">
+      <menuContribution locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <menu
+               commandId="ru.tsu.kitidis.fsmtest2junit.ui.commands.toolInfoCommand"
+               id="ru.tsu.kitidis.fsmtest2junit.ui.menus.toolMenu"
+               label="FSM Test To JUnit"
+               mnemonic="M">
+            <command
+                  commandId="ru.tsu.kitidis.fsmtest2junit.ui.commands.toolInfoCommand"
+                  id="ru.tsu.kitidis.fsmtest2junit.ui.menus.toolInfoCommand"
+                  mnemonic="S">
+                  <visibleWhen>
+					<with variable="activeMenuSelection">
+						<iterate ifEmpty="false">
+							<!--<adapt type="org.eclipse.core.resources.IResource"> -->
+							<adapt type="org.eclipse.jdt.core.IType">
+								<!-- <test property="org.eclipse.core.resources.name" value="*.java" /> -->
+							</adapt>
+						</iterate>
+					</with>
+                  </visibleWhen>
+            </command>
+            <command
+                  commandId="ru.tsu.kitidis.fsmtest2junit.ui.commands.buildJUnitTestCaseCommand"
+                  id="ru.tsu.kitidis.fsmtest2junit.ui.menus.buildJUnitTestCaseCommand"
+                  mnemonic="B"
+                  style="push">
+               <visibleWhen>
+                  <with
+                        variable="activeMenuSelection">
+                     <iterate
+                           ifEmpty="false">
+                        <adapt
+                              type="org.eclipse.jdt.core.IType">
+                        </adapt>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
